@@ -74,15 +74,7 @@ cd client && npm install
 npm run dev
 ```
 
-## 📝 Resume Addition
-Add this to your resume:
-```
-Portfolio: https://your-app-name.railway.app
-Tech: MERN Stack, React, Node.js, MongoDB
-```
 
-## 📄 License
-MIT License
 
 ## 📞 Contact
 - Email: hemantharikatla03@gmail.com
