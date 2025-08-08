@@ -75,10 +75,9 @@ npm run dev
 ```
 
 
-
 ## 📞 Contact
-- Email: hemantharikatla03@gmail.com
-- LinkedIn: [Your LinkedIn]
-- GitHub: [Your GitHub]
+- Email: arikatlahemanthkumar@gmail.com
+- LinkedIn: https://www.linkedin.com/in/arikatla-hemanth-kumar-0b3693213/
+- GitHub: https://github.com/arikatlahemanthkumar
+- Phone: +91 9492906798
 
-Ready to impress recruiters! 🎯 
