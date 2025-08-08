@@ -74,19 +74,9 @@ cd client && npm install
 npm run dev
 ```
 
-## 📝 Resume Addition
-Add this to your resume:
-```
-Portfolio: https://your-app-name.railway.app
-Tech: MERN Stack, React, Node.js, MongoDB
-```
-
-## 📄 License
-MIT License
-
 ## 📞 Contact
-- Email: hemantharikatla03@gmail.com
-- LinkedIn: [Your LinkedIn]
-- GitHub: [Your GitHub]
+- Email: arikatlahemanthkumar@gmail.com
+- LinkedIn: https://www.linkedin.com/in/arikatla-hemanth-kumar-0b3693213/
+- GitHub: https://github.com/arikatlahemanthkumar
+- Phone: +91 9492906798
 
-Ready to impress recruiters! 🎯 
