@@ -49,7 +49,7 @@ const Contact = () => {
     setStatus(null);
 
     try {
-      await axios.post('http://localhost:5000/api/contact', formData);
+      await axios.post('/api/contact', formData);
       setStatus({
         type: 'success',
         message: 'Thank you! Your message has been sent successfully.'
