@@ -44,7 +44,9 @@
 4. Get connection string
 5. Replace `your_mongodb_atlas_uri` with your connection string
 
-### Gmail App Password Setup
+### Email Authentication Options
+
+#### Option 1: Gmail App Password Setup
 1. Enable 2-factor authentication on your Gmail account:
    - Go to your Google Account > Security
    - Under "Signing in to Google," select 2-Step Verification > Get started
@@ -64,6 +66,26 @@
    - Make sure Less Secure App access is turned off (it's deprecated)
    - Check if your Google Account has any security restrictions
    - Try using a different email service if Gmail continues to cause problems
+
+#### Option 2: OAuth2 Authentication (More secure, recommended)
+1. Go to the [Google Developer Console](https://console.developers.google.com)
+2. Create a new project
+3. Enable the Gmail API for your project
+4. Create OAuth credentials (Web Application type)
+5. Add `https://developers.google.com/oauthplayground` as an authorized redirect URI
+6. Save your Client ID and Client Secret
+7. Go to [OAuth 2.0 Playground](https://developers.google.com/oauthplayground)
+8. Click the gear icon and check "Use your own OAuth credentials"
+9. Enter your Client ID and Client Secret
+10. Select Gmail API v1 and authorize with scope `https://mail.google.com/`
+11. Exchange the authorization code for tokens
+12. Save the refresh token
+13. Add these values to your environment variables:
+    ```
+    CLIENT_ID=your_client_id
+    CLIENT_SECRET=your_client_secret
+    REFRESH_TOKEN=your_refresh_token
+    ```
 
 ## Local Testing Before Deploy
 

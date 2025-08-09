@@ -38,19 +38,61 @@ router.post('/', [
 
     await contact.save();
 
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    // Check if we have email credentials
+    if (process.env.EMAIL_USER) {
       try {
-        // Use OAuth2 for Gmail
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS // App password (no spaces)
-          },
-          tls: {
-            rejectUnauthorized: false
-          }
-        });
+        let transporter;
+        
+        // Check if we have OAuth2 credentials
+        if (process.env.CLIENT_ID && process.env.CLIENT_SECRET && process.env.REFRESH_TOKEN) {
+          // Use OAuth2 for Gmail (more secure)
+          const { google } = await import('googleapis');
+          
+          // Create OAuth2 client
+          const oAuth2Client = new google.auth.OAuth2(
+            process.env.CLIENT_ID,
+            process.env.CLIENT_SECRET,
+            'https://developers.google.com/oauthplayground'
+          );
+
+          // Set credentials
+          oAuth2Client.setCredentials({
+            refresh_token: process.env.REFRESH_TOKEN
+          });
+
+          // Get access token
+          const accessToken = await oAuth2Client.getAccessToken();
+
+          // Create transporter with OAuth2
+          transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              type: 'OAuth2',
+              user: process.env.EMAIL_USER,
+              clientId: process.env.CLIENT_ID,
+              clientSecret: process.env.CLIENT_SECRET,
+              refreshToken: process.env.REFRESH_TOKEN,
+              accessToken: accessToken.token
+            }
+          });
+          console.log('Using OAuth2 method for email');
+        } else if (process.env.EMAIL_PASS) {
+          // Fallback to app password method
+          console.log('Using app password method for email');
+          transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: process.env.EMAIL_USER,
+              pass: process.env.EMAIL_PASS // App password (no spaces)
+            },
+            tls: {
+              rejectUnauthorized: false
+            }
+          });
+        } else {
+          console.log('No email authentication method available');
+          throw new Error('No email authentication method available');
+        }
 
         const mailOptions = {
           from: process.env.EMAIL_USER,

@@ -1,8 +1,20 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
 
-// Load environment variables
-dotenv.config();
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load environment variables from .env.new file in the same directory as this script
+dotenv.config({ path: path.join(__dirname, '.env.new') });
+
+// Debug: Print environment variables
+console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'is set' : 'is not set');
+console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'is set' : 'is not set');
+console.log('Current directory:', __dirname);
 
 // Check if email credentials are set
 if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
