@@ -6,24 +6,24 @@ const About = () => {
   const [ref, inView] = useInView({ triggerOnce: true });
 
   const personalInfo = {
-    name: 'Hemanth Kumar Arikatla',
-    email: 'hemantharikatla03@gmail.com',
+    name: 'Arikatla Hemanth Kumar',
+    email: 'arikatlahemanthkumar@gmail.com',
     phone: '+91 9492906798',
     location: 'Tirupati, Andhra Pradesh, India',
-    degree: 'B.Tech in Computer Science',
-    university: 'Sri Venkateswara University',
-    graduation: '2024'
+    degree: 'B.E in Computer Science And Engineering',
+    university: 'Sri Venkateswara College of Engineering, Tirupati',
+    graduation: 'CGPA 8.16 (2020-2024)'
   };
 
   const highlights = [
-    'Full Stack Development with MERN Stack',
-    'Modern React.js with Hooks and Context',
-    'Node.js and Express.js Backend Development',
-    'MongoDB Database Design and Management',
-    'RESTful API Development and Integration',
-    'Responsive Web Design and UI/UX',
-    'Git Version Control and Collaboration',
-    'Problem Solving and Algorithm Design'
+    'MERN Stack Developer with practical experience',
+    'Building dynamic and responsive web applications',
+    'MongoDB, Express.js, React.js, and Node.js',
+    'Proficient in REST API development and authentication',
+    'Database management with Mongoose',
+    'Skilled in Redux for state management',
+    'User-friendly applications with hands-on experience',
+    'Passionate about learning new technologies'
   ];
 
   return (
@@ -51,34 +51,38 @@ const About = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8"
           >
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                Personal Information
-              </h3>
-              <div className="space-y-4">
-                {Object.entries(personalInfo).map(([key, value]) => (
-                  <div key={key} className="flex items-center space-x-4">
-                    <span className="font-semibold text-gray-700 capitalize w-24">
-                      {key.replace(/([A-Z])/g, ' $1').trim()}:
-                    </span>
-                    <span className="text-gray-600">{value}</span>
-                  </div>
-                ))}
+            <h3 className="text-2xl font-semibold text-gray-900 mb-6">Personal Info</h3>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <span className="font-medium text-gray-700 w-24">Name:</span>
+                <span className="text-gray-600">{personalInfo.name}</span>
+              </div>
+              <div className="flex items-center">
+                <span className="font-medium text-gray-700 w-24">Email:</span>
+                <span className="text-gray-600">{personalInfo.email}</span>
+              </div>
+              <div className="flex items-center">
+                <span className="font-medium text-gray-700 w-24">Phone:</span>
+                <span className="text-gray-600">{personalInfo.phone}</span>
+              </div>
+              <div className="flex items-center">
+                <span className="font-medium text-gray-700 w-24">Location:</span>
+                <span className="text-gray-600">{personalInfo.location}</span>
               </div>
             </div>
 
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                Education
-              </h3>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                  {personalInfo.degree}
-                </h4>
-                <p className="text-gray-600 mb-2">{personalInfo.university}</p>
-                <p className="text-primary-600 font-medium">Graduated: {personalInfo.graduation}</p>
+            <div className="mt-8">
+              <h4 className="text-xl font-semibold text-gray-900 mb-4">Education</h4>
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h5 className="font-semibold text-primary-600 text-lg">{personalInfo.degree}</h5>
+                <p className="text-gray-700 font-medium">{personalInfo.university}</p>
+                <p className="text-gray-600">{personalInfo.graduation}</p>
+                <div className="mt-3">
+                  <span className="inline-block bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">
+                    CGPA: 8.16
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>

@@ -8,49 +8,43 @@ const Experience = () => {
 
   const timeline = [
     {
-      year: '2024',
-      title: 'Graduation',
-      description: 'Completed B.Tech in Computer Science from Sri Venkateswara University',
-      location: 'Tirupati, Andhra Pradesh'
+      year: '2020-2024',
+      title: 'B.E in Computer Science And Engineering',
+      description: 'Sri Venkateswara College of Engineering, Tirupati',
+      location: 'CGPA: 8.16'
     },
     {
-      year: '2023',
-      title: 'Full Stack Development',
-      description: 'Started learning MERN stack and building web applications',
-      location: 'Online'
+      year: 'Oct 2023 - Apr 2024',
+      title: 'MERN Stack Development - Long-Term Internship',
+      description: 'SmartBridge Educational Services Pvt. Ltd. (in collaboration with APSCHE)',
+      location: 'Remote'
     },
     {
-      year: '2022',
-      title: 'Programming Fundamentals',
-      description: 'Learned core programming concepts and data structures',
-      location: 'University'
+      year: 'Jul 2024 - Feb 2025',
+      title: 'MERN Stack Course Completion',
+      description: 'DCT Academy, Bangalore',
+      location: '6 Months'
     }
   ];
 
   const certifications = [
     {
-      name: 'Data Structures and Algorithms',
-      issuer: 'Coursera',
-      date: '2024',
-      certificateUrl: 'https://drive.google.com/file/d/your-dct-certificate-id/view?usp=sharing'
+      name: 'Certification of Internship and Training on MERN Stack Course Completion',
+      issuer: 'DCT Academy - Bangalore',
+      date: 'July 2024 - February 2025 (6 Months)',
+      certificateUrl: '#'
     },
     {
-      name: 'MongoDB Database Administrator',
-      issuer: 'MongoDB University',
-      date: '2024',
-      certificateUrl: 'https://drive.google.com/file/d/1LG3magKPMaZJZBSR0vkVAE9hDhUB2dGV/view?usp=drive_link'
+      name: 'MERN Stack Development - Long-Term Internship',
+      issuer: 'SmartBridge Educational Services Pvt. Ltd.',
+      date: 'October 2023 - April 2024',
+      certificateUrl: '#'
     },
     {
-      name: 'React.js Development',
-      issuer: 'Udemy',
-      date: '2023',
-      certificateUrl: 'https://drive.google.com/file/d/1a-fILsW-LuFcJt6T6eXzqAbNkkHV6Ewo/view?usp=drive_link'
-    },
-    {
-      name: 'HTML, CSS, and Javascript for Web Developers',
-      issuer: 'Coursera',
-      date: '2023',
-      certificateUrl: 'https://drive.google.com/file/d/1L19q9zlXnFEXMnxih4RhcwNNrhdOyz9a/view?usp=sharing'
+      name: 'Introduction to LangGraph – Certified in building dynamic AI agents',
+      issuer: 'LangGraph',
+      date: 'May 2025',
+      certificateUrl: '#'
     }
   ];
 

@@ -7,47 +7,51 @@ const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('all');
 
   const skillsData = {
+    programming: [
+      { name: 'JavaScript', level: 90 },
+      { name: 'Java', level: 80 },
+      { name: 'Python', level: 75 },
+      { name: 'C/C++', level: 70 }
+    ],
     frontend: [
+      { name: 'HTML5', level: 90 },
+      { name: 'CSS3', level: 85 },
       { name: 'React.js', level: 90 },
-      { name: 'JavaScript', level: 85 },
-      { name: 'HTML/CSS', level: 90 },
-      { name: 'Tailwind CSS', level: 80 },
-      { name: 'TypeScript', level: 70 }
+      { name: 'Tailwind CSS', level: 85 }
     ],
     backend: [
       { name: 'Node.js', level: 85 },
-      { name: 'Express.js', level: 80 },
-      { name: 'Python', level: 75 },
-      { name: 'Java', level: 70 },
-      { name: 'REST APIs', level: 85 }
+      { name: 'Express.js', level: 85 },
+      { name: 'REST API', level: 90 },
+      { name: 'JWT Authentication', level: 80 }
     ],
     database: [
-      { name: 'MongoDB', level: 80 },
-      { name: 'MySQL', level: 75 },
-      { name: 'PostgreSQL', level: 70 },
-      { name: 'Redis', level: 65 }
+      { name: 'MongoDB', level: 85 },
+      { name: 'Neon DB', level: 75 },
+      { name: 'MySQL', level: 70 }
     ],
     ai: [
-      { name: 'LangChain', level: 75 },
-      { name: 'LangGraph', level: 70 },
-      { name: 'Together AI', level: 70 },
+      { name: 'LangGraph', level: 80 },
+      { name: 'LangChain', level: 80 },
+      { name: 'Together AI', level: 75 },
       { name: 'OpenAI API', level: 75 }
     ],
     tools: [
       { name: 'Git/GitHub', level: 85 },
       { name: 'VS Code', level: 90 },
+      { name: 'Figma', level: 75 },
       { name: 'Postman', level: 80 },
-      { name: 'Docker', level: 70 },
-      { name: 'AWS', level: 65 }
+      { name: 'Balsamiq', level: 70 }
     ]
   };
 
   const categories = [
     { id: 'all', name: 'All Skills' },
+    { id: 'programming', name: 'Programming' },
     { id: 'frontend', name: 'Frontend' },
     { id: 'backend', name: 'Backend' },
     { id: 'database', name: 'Database' },
-    { id: 'ai', name: 'AI/ML' },
+    { id: 'ai', name: 'AI Technologies' },
     { id: 'tools', name: 'Tools' }
   ];
 

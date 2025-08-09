@@ -76,7 +76,7 @@ const Hero = () => {
                 className="text-5xl lg:text-6xl font-bold text-gray-900"
               >
                 Hi, I'm{' '}
-                <span className="gradient-text">Hemanth</span>
+                <span className="gradient-text">Arikatla Hemanth Kumar</span>
               </motion.h1>
               
               <motion.div
@@ -88,11 +88,11 @@ const Hero = () => {
                 <Typewriter
                   options={{
                     strings: [
-                      'Full Stack Developer',
-                      'MERN Stack Expert',
-                      'React.js Developer',
+                      'ASPIRING FULL STACK DEVELOPER',
+                      'MERN Stack Developer',
+                      'React.js Developer', 
                       'Node.js Developer',
-                      'AI/ML Enthusiast'
+                      'AI Technologies Enthusiast'
                     ],
                     autoStart: true,
                     loop: true,
@@ -109,8 +109,9 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-lg text-gray-600 max-w-lg"
             >
-              Passionate about creating innovative web solutions and turning ideas into reality. 
-              Specialized in modern web technologies and always eager to learn new skills.
+              MERN Stack Developer with practical experience in building dynamic and responsive web applications. 
+              Proficient in REST API development, authentication, and database management with hands-on experience 
+              developing user-friendly applications.
             </motion.p>
 
             <motion.div
