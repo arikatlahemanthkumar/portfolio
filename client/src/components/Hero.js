@@ -164,7 +164,7 @@ const Hero = () => {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Floating tech stack icons around the profile picture */}
+              
               {[
                 { icon: FaReact, top: '-10%', left: '0%', size: 'text-3xl', color: 'text-blue-400', animationDuration: '8s', animationDelay: '0s' },
                 { icon: FaNodeJs, top: '10%', right: '-5%', size: 'text-2xl', color: 'text-green-500', animationDuration: '6s', animationDelay: '0.5s' },

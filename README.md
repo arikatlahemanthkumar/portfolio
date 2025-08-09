@@ -94,7 +94,7 @@ You have two options for setting up the contact form email functionality:
 
 ### Troubleshooting Email Issues
 
-- Make sure Less Secure App access is turned off (it's deprecated)
+- Make sure Less Secure App access is turned off
 - Check if your Google Account has any security restrictions
 - Verify that all credentials are entered correctly
 - Try using a different email service if Gmail continues to cause problems

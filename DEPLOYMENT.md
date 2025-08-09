@@ -63,7 +63,7 @@
 3. Use that password in `EMAIL_PASS` environment variable
 
 4. Important: If you're still having issues with Gmail authentication:
-   - Make sure Less Secure App access is turned off (it's deprecated)
+   - Make sure Less Secure App access is turned off
    - Check if your Google Account has any security restrictions
    - Try using a different email service if Gmail continues to cause problems
 

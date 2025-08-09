@@ -60,13 +60,10 @@ const Experience = () => {
     
   ];
   
-  // Control the sequential animation of timeline items
   useEffect(() => {
     if (timelineInView) {
-      // First show the timeline
       setShowTimeline(true);
       
-      // Then animate each item sequentially
       const timer = setTimeout(() => {
         let index = 0;
         const intervalId = setInterval(() => {
@@ -75,19 +72,17 @@ const Experience = () => {
             index++;
           } else {
             clearInterval(intervalId);
-            // After timeline is complete, show certifications
             setShowCertifications(true);
           }
-        }, 800); // Delay between each item appearing
+        }, 800);
         
         return () => clearInterval(intervalId);
-      }, 1000); // Delay before starting the sequence after timeline appears
+      }, 1000);
       
       return () => clearTimeout(timer);
     }
   }, [timelineInView, timelineData.length]);
   
-  // Separate effect for certifications if timeline is not in view but certs are
   useEffect(() => {
     if (!timelineInView && certInView) {
       setShowCertifications(true);
@@ -138,7 +133,6 @@ const Experience = () => {
     },   
   ];
   
-  // Container variants for staggered animation
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -149,7 +143,6 @@ const Experience = () => {
     }
   };
 
-  // Item variants for individual card animations
   const itemVariants = {
     hidden: { y: 50, opacity: 0 },
     visible: { 
@@ -185,7 +178,7 @@ const Experience = () => {
         </motion.div>
 
         <div className="relative max-w-4xl mx-auto">
-          {/* Main vertical line */}
+          
           <motion.div
             initial={{ height: 0 }}
             animate={showTimeline ? { height: '100%' } : { height: 0 }}
@@ -194,7 +187,7 @@ const Experience = () => {
             style={{ top: '2rem', bottom: '2rem', animationDuration: '2s', animationFillMode: 'forwards', animationPlayState: showTimeline ? 'running' : 'paused' }}
           ></motion.div>
 
-          {/* Timeline items */}
+          
           <div className="space-y-12">
             {timelineData.map((item, index) => (
               <motion.div
@@ -206,16 +199,15 @@ const Experience = () => {
                   index % 2 === 0 ? 'justify-start' : 'justify-end'
                 } mb-24`}
               >
-                {/* Year bubble on the line */}
+                
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={timelineInView ? { scale: 1 } : {}}
                   transition={{ duration: 0.5, delay: 1 + index * 0.2 }}
                   className="absolute left-1/2 transform -translate-x-1/2 z-10"
                   style={{ 
-                    top: '50%',
-                    animation: timelineInView ? 'popIn 0.6s forwards' : 'none',
-                    animationDelay: `${0.5 + index * 0.2}s`
+                    top: '50%'
+                    // Removed conflicting animation and animationDelay properties
                   }}
                 >
                   <div 
@@ -228,7 +220,7 @@ const Experience = () => {
                   </div>
                 </motion.div>
 
-                {/* Content card */}
+                
                 <motion.div
                   initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
                   animate={activeIndex >= index ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
@@ -241,14 +233,13 @@ const Experience = () => {
                   }}
                   className={`w-5/12 ${index % 2 === 0 ? 'mr-auto' : 'ml-auto'}`}
                   style={{ 
-                    animation: activeIndex >= index ? `${index % 2 === 0 ? 'slideInLeft' : 'slideInRight'} 0.8s forwards` : 'none',
-                    animationDelay: `${0.7 + index * 0.2}s`,
+                    // Removed conflicting animation and animationDelay properties
                     marginLeft: index % 2 === 0 ? '0' : '60px',
                     marginRight: index % 2 === 0 ? '60px' : '0'
                   }}
                 >
                   <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                    {/* Type icon */}
+                    
                     <div className="flex items-center mb-3">
                       {item.type === 'education' && <FiBook className="text-blue-600 mr-2" />}
                       {item.type === 'learning' && <FiBook className="text-green-600 mr-2" />}
@@ -270,7 +261,7 @@ const Experience = () => {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
                     <p className="text-gray-600 mb-4">{item.description}</p>
                     
-                    {/* Achievements */}
+                    
                     <div className="space-y-2">
                       <h4 className="text-sm font-medium text-gray-700">Key Achievements:</h4>
                       {item.achievements.map((achievement, achievementIndex) => (
@@ -287,7 +278,7 @@ const Experience = () => {
                       ))}
                     </div>
                     
-                    {/* Certificate Link */}
+                    
                     {item.certificateLink && (
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -313,7 +304,7 @@ const Experience = () => {
           </div>
         </div>
 
-        {/* Current Status */}
+        
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={timelineInView ? { opacity: 1, y: 0 } : {}}
@@ -342,7 +333,7 @@ const Experience = () => {
           </div>
         </motion.div>
         
-        {/* Certifications Section */}
+        
         <motion.div
           ref={certRef}
           initial={{ opacity: 0, y: 50 }}
@@ -370,10 +361,7 @@ const Experience = () => {
                 key={cert.id}
                 variants={itemVariants}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100"
-                style={{ 
-                  animation: showCertifications ? 'popIn 0.6s forwards' : 'none',
-                  animationDelay: `${0.2 + index * 0.15}s`
-                }}
+                // Removed conflicting animation and animationDelay properties
               >
               <div className={`h-3 bg-gradient-to-r ${cert.color}`}></div>
               <div className="p-6">
@@ -391,7 +379,7 @@ const Experience = () => {
                 
                 <p className="text-gray-600 mb-5">{cert.description}</p>
                 
-                {/* Certificate Link */}
+                
                 <div className="mb-5">
                   <a 
                     href={cert.certificateLink} 

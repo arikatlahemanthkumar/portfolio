@@ -53,7 +53,7 @@
   }
 }
 
-/* Custom scrollbar */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -71,7 +71,7 @@
   background: #2563eb;
 }
 
-/* Animation classes */
+
 .animate-fade-in {
   animation: fadeIn 0.6s ease-in-out;
 }
