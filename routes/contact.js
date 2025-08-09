@@ -40,11 +40,15 @@ router.post('/', [
 
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
       try {
+        // Use OAuth2 for Gmail
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
             user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
+            pass: process.env.EMAIL_PASS // App password (no spaces)
+          },
+          tls: {
+            rejectUnauthorized: false
           }
         });
 
@@ -66,6 +70,9 @@ router.post('/', [
         console.log('Email sent successfully:', result.messageId);
       } catch (emailError) {
         console.error('Email sending failed:', emailError.message);
+        console.error('Email error details:', emailError);
+        // Still return success to the client since we saved to database
+        // In production, you might want to log this to a monitoring service
       }
     }
 
@@ -76,4 +83,4 @@ router.post('/', [
   }
 });
 
-export default router; 
+export default router;

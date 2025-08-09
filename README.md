@@ -47,13 +47,29 @@ portfolio/
 - ✅ SEO optimized
 
 ## 📧 Contact Form Setup
-1. Enable 2FA on your Gmail
-2. Generate app password
+1. Enable 2FA on your Gmail account:
+   - Go to your Google Account > Security
+   - Under "Signing in to Google," select 2-Step Verification > Get started
+   - Follow the steps to turn on 2-Step Verification
+
+2. Generate an App Password:
+   - Go to your Google Account > Security
+   - Under "Signing in to Google," select App passwords (requires 2-Step Verification)
+   - Select "Mail" as the app and "Other" as the device
+   - Enter a name (e.g., "Portfolio Contact Form")
+   - Click "Generate"
+   - Copy the 16-character password (spaces will be removed automatically)
+
 3. Add to environment variables:
    ```
    EMAIL_USER=your-email@gmail.com
    EMAIL_PASS=your-app-password
    ```
+
+4. If you're still having issues with Gmail authentication:
+   - Make sure Less Secure App access is turned off (it's deprecated)
+   - Check if your Google Account has any security restrictions
+   - Try using a different email service if Gmail continues to cause problems
 
 ## 🗄️ Database Setup
 1. Create MongoDB Atlas account

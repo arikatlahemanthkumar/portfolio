@@ -44,10 +44,26 @@
 4. Get connection string
 5. Replace `your_mongodb_atlas_uri` with your connection string
 
-### Gmail App Password
-1. Enable 2-factor authentication on your Gmail
-2. Generate app password
-3. Use that password in `EMAIL_PASS`
+### Gmail App Password Setup
+1. Enable 2-factor authentication on your Gmail account:
+   - Go to your Google Account > Security
+   - Under "Signing in to Google," select 2-Step Verification > Get started
+   - Follow the steps to turn on 2-Step Verification
+
+2. Generate an App Password:
+   - Go to your Google Account > Security
+   - Under "Signing in to Google," select App passwords (requires 2-Step Verification)
+   - Select "Mail" as the app and "Other" as the device
+   - Enter a name (e.g., "Portfolio Contact Form")
+   - Click "Generate"
+   - Copy the 16-character password (remove spaces)
+
+3. Use that password in `EMAIL_PASS` environment variable
+
+4. Important: If you're still having issues with Gmail authentication:
+   - Make sure Less Secure App access is turned off (it's deprecated)
+   - Check if your Google Account has any security restrictions
+   - Try using a different email service if Gmail continues to cause problems
 
 ## Local Testing Before Deploy
 
