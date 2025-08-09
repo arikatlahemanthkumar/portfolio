@@ -41,7 +41,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <h3 className="text-2xl font-bold mb-4">
-              Hemanth Kumar <span className="gradient-text">Arikatla</span>
+              <span className="gradient-text">Arikatla Hemanth Kumar</span>
             </h3>
             <p className="text-gray-300 mb-6 max-w-md">
               A passionate Full Stack Developer dedicated to creating innovative web solutions. 
@@ -83,7 +83,7 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-2 text-gray-300">
               <p>+91 9492906798</p>
-              <p>hemantharikatla03@gmail.com</p>
+              <p>arikatlahemanthkumar@gmail.com</p>
               <p>Tirupati, Andhra Pradesh</p>
             </div>
           </div>

@@ -24,8 +24,8 @@ const Contact = () => {
     },
     {
       title: 'Email',
-      value: 'hemantharikatla03@gmail.com',
-      link: 'mailto:hemantharikatla03@gmail.com',
+      value: 'arikatlahemanthkumar@gmail.com',
+      link: 'mailto:arikatlahemanthkumar@gmail.com',
       icon: FiMail
     },
     {

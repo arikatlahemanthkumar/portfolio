@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { FiPhone, FiMail, FiMapPin, FiUser } from 'react-icons/fi';
 
 const About = () => {
   const [ref, inView] = useInView({ triggerOnce: true });
@@ -14,6 +15,33 @@ const About = () => {
     university: 'Sri Venkateswara College of Engineering, Tirupati',
     graduation: 'CGPA 8.16 (2020-2024)'
   };
+  
+  const contactInfo = [
+    {
+      title: 'Name',
+      value: personalInfo.name,
+      link: '#',
+      icon: FiUser
+    },
+    {
+      title: 'Phone',
+      value: personalInfo.phone,
+      link: `tel:${personalInfo.phone.replace(/\s+/g, '')}`,
+      icon: FiPhone
+    },
+    {
+      title: 'Email',
+      value: personalInfo.email,
+      link: `mailto:${personalInfo.email}`,
+      icon: FiMail
+    },
+    {
+      title: 'Location',
+      value: personalInfo.location,
+      link: '#',
+      icon: FiMapPin
+    }
+  ];
 
   const highlights = [
     'MERN Stack Developer with practical experience',
@@ -53,23 +81,29 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h3 className="text-2xl font-semibold text-gray-900 mb-6">Personal Info</h3>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <span className="font-medium text-gray-700 w-24">Name:</span>
-                <span className="text-gray-600">{personalInfo.name}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="font-medium text-gray-700 w-24">Email:</span>
-                <span className="text-gray-600">{personalInfo.email}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="font-medium text-gray-700 w-24">Phone:</span>
-                <span className="text-gray-600">{personalInfo.phone}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="font-medium text-gray-700 w-24">Location:</span>
-                <span className="text-gray-600">{personalInfo.location}</span>
-              </div>
+            <div className="space-y-6">
+              {contactInfo.map((info, index) => (
+                <motion.div
+                  key={info.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                  className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+                >
+                  <div className="text-primary-600 text-xl">
+                    <info.icon />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">{info.title}</h4>
+                    <a
+                      href={info.link}
+                      className="text-gray-600 hover:text-primary-600 transition-colors duration-300"
+                    >
+                      {info.value}
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
             <div className="mt-8">
@@ -135,4 +169,4 @@ const About = () => {
   );
 };
 
-export default About; 
+export default About;

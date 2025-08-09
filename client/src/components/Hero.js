@@ -2,8 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Typewriter from 'typewriter-effect';
-import { FiGithub, FiLinkedin, FiMail, FiDownload, FiTarget } from 'react-icons/fi';
-import { FaReact, FaRocket, FaLaptopCode, FaBolt, FaWrench } from 'react-icons/fa';
+import { FiGithub, FiLinkedin, FiMail, FiDownload, FiTarget, FiExternalLink } from 'react-icons/fi';
+import { FaReact, FaRocket, FaLaptopCode, FaBolt, FaWrench, FaNodeJs, FaJs, FaDatabase, FaCode } from 'react-icons/fa';
+import { SiMongodb, SiExpress, SiTailwindcss } from 'react-icons/si';
 
 const Hero = () => {
   const [ref, inView] = useInView({ triggerOnce: true });
@@ -129,6 +130,14 @@ const Hero = () => {
                 <span>Download Resume</span>
               </a>
               
+              <a
+                href="#projects"
+                className="btn-secondary flex items-center space-x-2"
+              >
+                <FiExternalLink />
+                <span>View My Work</span>
+              </a>
+              
               <div className="flex space-x-4">
                 {socialLinks.map((link, index) => (
                   <motion.a
@@ -155,6 +164,46 @@ const Hero = () => {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative">
+              {/* Floating tech stack icons around the profile picture */}
+              {[
+                { icon: FaReact, top: '-10%', left: '0%', size: 'text-3xl', color: 'text-blue-400', animationDuration: '8s', animationDelay: '0s' },
+                { icon: FaNodeJs, top: '10%', right: '-5%', size: 'text-2xl', color: 'text-green-500', animationDuration: '6s', animationDelay: '0.5s' },
+                { icon: SiMongodb, bottom: '10%', left: '5%', size: 'text-4xl', color: 'text-green-600', animationDuration: '10s', animationDelay: '1s' },
+                { icon: SiExpress, bottom: '-5%', right: '10%', size: 'text-3xl', color: 'text-gray-600', animationDuration: '7s', animationDelay: '1.5s' },
+                { icon: FaJs, top: '50%', left: '-10%', size: 'text-2xl', color: 'text-yellow-400', animationDuration: '9s', animationDelay: '2s' },
+                { icon: SiTailwindcss, top: '40%', right: '-8%', size: 'text-xl', color: 'text-blue-500', animationDuration: '8s', animationDelay: '2.5s' },
+                { icon: FaDatabase, top: '20%', left: '-8%', size: 'text-2xl', color: 'text-purple-500', animationDuration: '7s', animationDelay: '3s' },
+                { icon: FaCode, bottom: '30%', right: '-10%', size: 'text-2xl', color: 'text-gray-700', animationDuration: '9s', animationDelay: '3.5s' },
+              ].map((item, index) => (
+                <motion.div
+                  key={`profile-icon-${index}`}
+                  className={`absolute z-10 ${item.size} ${item.color} opacity-70`}
+                  style={{
+                    top: item.top,
+                    left: item.left,
+                    right: item.right,
+                    bottom: item.bottom,
+                  }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ 
+                    opacity: 0.7, 
+                    scale: 1,
+                    rotate: [0, 360],
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    delay: index * 0.2,
+                    rotate: {
+                      duration: parseInt(item.animationDuration),
+                      repeat: Infinity,
+                      ease: "linear"
+                    }
+                  }}
+                >
+                  <item.icon />
+                </motion.div>
+              ))}
+              
               <div className="w-80 h-80 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center shadow-2xl">
                 <img
                   src="/profile-image.jpg"
@@ -177,4 +226,4 @@ const Hero = () => {
   );
 };
 
-export default Hero; 
+export default Hero;

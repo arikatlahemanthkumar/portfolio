@@ -48,7 +48,7 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold text-primary-600"
           >
-            HK
+            AHK
           </motion.div>
 
           <div className="hidden md:flex space-x-8">
