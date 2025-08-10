@@ -13,7 +13,7 @@ const Projects = () => {
       title: 'Ride Share Application',
       description: 'A comprehensive ride-sharing platform built with MERN stack, featuring real-time location tracking, payment integration, and user authentication.',
       image: '/ride-share.png',
-      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Socket.io', 'Stripe'],
+      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB','Redux', 'Nodemailer', 'Cloudinary','Stripe'],
       features: [
         'Real-time location tracking',
         'Secure payment processing',
@@ -32,7 +32,7 @@ const Projects = () => {
       title: 'AI ChatBot Assistant',
       description: 'An intelligent chatbot powered by LangChain and OpenAI, capable of understanding context and providing helpful responses across various domains.',
       image: '/chatbot.jpg',
-      technologies: ['Python', 'LangChain', 'OpenAI API', 'Streamlit', 'Pandas', 'NLTK'],
+      technologies: ['Python', 'LangChain', 'Together AI', 'Neon DB','RESTful API','FastAPI'],
       features: [
         'Natural language processing',
         'Context-aware conversations',
@@ -42,7 +42,7 @@ const Projects = () => {
         'Customizable responses'
       ],
       githubUrl: 'https://github.com/arikatlahemanthkumar/chatbot',
-      liveUrl: 'https://chatbot-demo.com',
+      //liveUrl: 'https://chatbot-demo.com',
       category: 'ai',
       featured: true
     }
