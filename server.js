@@ -37,11 +37,13 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
-// Export for Vercel serverless functions
-export default app;
+// For both local development and Vercel serverless functions
+const PORT = process.env.PORT || 5000;
 
-// Local development mode
+// Only start the server if not running on Vercel
 if (process.env.VERCEL === undefined) {
-  const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
+
+// Export for Vercel serverless functions
+export default app;

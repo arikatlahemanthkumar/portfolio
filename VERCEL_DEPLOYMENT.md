@@ -26,9 +26,9 @@ Make sure your code is pushed to a GitHub repository.
 
 This project is configured to work with Vercel's serverless functions:
 
-- `server.js` exports the Express app for Vercel and also works locally
-- `api/index.js` serves as the serverless entry point
-- `vercel.json` routes API requests to the serverless function
+- `server.js` serves as both the Express app for local development and the serverless entry point for Vercel
+- `vercel.json` routes all requests to the server.js file
+- The Express app serves both the API endpoints and the React frontend
 
 ### 3. Environment Variables
 
