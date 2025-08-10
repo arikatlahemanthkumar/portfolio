@@ -24,18 +24,30 @@ Full Stack Developer Portfolio built with MERN Stack
 ## 📁 Project Structure
 ```
 portfolio/
-├── client/                 # React Frontend
-│   ├── public/            # Static assets
+├── api/                   # Vercel serverless entry point
+│   └── index.js          # Serverless function entry
+├── client/                # React Frontend
+│   ├── public/           # Static assets
 │   └── src/
-│       ├── components/    # React components
-│       └── index.js       # App entry point
+│       ├── components/   # React components
+│       └── index.js      # App entry point
 ├── config/
-│   └── db.js             # Database configuration
-├── models/               # MongoDB schemas
-├── routes/               # API routes
-├── server.js             # Express server
-└── package.json          # Backend dependencies
+│   └── db.js            # Database configuration with connection pooling
+├── models/              # MongoDB schemas
+├── routes/              # API routes
+├── server.js            # Express server (works both locally and on Vercel)
+├── vercel.json          # Vercel deployment configuration
+└── package.json         # Backend dependencies
 ```
+
+## 🌐 Serverless Architecture
+
+This portfolio is designed to work both locally and as a serverless application on Vercel:
+
+- **Local Development**: Run with `node server.js` for a traditional Express server
+- **Vercel Deployment**: Automatically runs as serverless functions
+- **Database Connection**: Optimized with connection pooling for serverless environments
+- **API Routes**: Seamlessly work in both environments
 
 ## 🎯 Features
 - ✅ Responsive design

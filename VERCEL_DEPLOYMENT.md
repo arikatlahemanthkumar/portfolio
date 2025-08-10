@@ -22,6 +22,14 @@ Make sure your code is pushed to a GitHub repository.
    - Build Command: npm run vercel-build
    - Output Directory: client/build
 
+### Serverless Configuration
+
+This project is configured to work with Vercel's serverless functions:
+
+- `server.js` exports the Express app for Vercel and also works locally
+- `api/index.js` serves as the serverless entry point
+- `vercel.json` routes API requests to the serverless function
+
 ### 3. Environment Variables
 
 Add the following environment variables in the Vercel project settings:
