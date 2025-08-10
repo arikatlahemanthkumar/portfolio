@@ -5,7 +5,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Production builds
-/client/build
+# Keep the build directory for Vercel deployment
+# /client/build
 /client/dist
 
 # Environment variables
@@ -98,4 +99,4 @@ Thumbs.db
 
 # Temporary files
 tmp/
-temp/ 
+temp/
