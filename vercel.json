@@ -11,39 +11,30 @@
     },
     { "src": "client/build/**", "use": "@vercel/static" }
   ],
-  "routes": [
-    { "src": "/api/health", "dest": "/server.js", "methods": ["GET"] },
-    { "src": "/api/warmup", "dest": "/server.js", "methods": ["GET"] },
-    { "src": "/api/(.*)", "dest": "/server.js" },
+  "rewrites": [
+    { "source": "/api/health", "destination": "/server.js" },
+    { "source": "/api/warmup", "destination": "/server.js" },
+    { "source": "/api/(.*)", "destination": "/server.js" },
     
-    { "src": "/static/(.*)", "dest": "/client/build/static/$1" },
-    { "src": "/favicon.ico", "dest": "/client/build/favicon.ico" },
-    { "src": "/asset-manifest.json", "dest": "/client/build/asset-manifest.json" },
-    { "src": "/manifest.json", "dest": "/client/build/manifest.json" },
-    {
-      "src": "/serviceWorker.js",
-      "dest": "/client/build/serviceWorker.js",
-      "headers": {
-        "Cache-Control": "no-store, no-cache, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0",
-        "Content-Type": "application/javascript; charset=UTF-8"
-      }
-    },
-    { "src": "/preload.js", "dest": "/client/build/preload.js" },
+    { "source": "/static/(.*)", "destination": "/client/build/static/$1" },
+    { "source": "/favicon.ico", "destination": "/client/build/favicon.ico" },
+    { "source": "/asset-manifest.json", "destination": "/client/build/asset-manifest.json" },
+    { "source": "/manifest.json", "destination": "/client/build/manifest.json" },
+    { "source": "/serviceWorker.js", "destination": "/client/build/serviceWorker.js" },
+    { "source": "/preload.js", "destination": "/client/build/preload.js" },
     
-    { "src": "/profile-image.jpg", "dest": "/client/build/profile-image.jpg" },
-    { "src": "/og-image.jpg", "dest": "/client/build/og-image.jpg" },
-    { "src": "/chatbot.jpg", "dest": "/client/build/chatbot.jpg" },
-    { "src": "/ride-share.png", "dest": "/client/build/ride-share.png" },
-    { "src": "/default-image.svg", "dest": "/client/build/default-image.svg" },
-    { "src": "/default-icon.svg", "dest": "/client/build/default-icon.svg" },
+    { "source": "/profile-image.jpg", "destination": "/client/build/profile-image.jpg" },
+    { "source": "/og-image.jpg", "destination": "/client/build/og-image.jpg" },
+    { "source": "/chatbot.jpg", "destination": "/client/build/chatbot.jpg" },
+    { "source": "/ride-share.png", "destination": "/client/build/ride-share.png" },
+    { "source": "/default-image.svg", "destination": "/client/build/default-image.svg" },
+    { "source": "/default-icon.svg", "destination": "/client/build/default-icon.svg" },
     
-    { "src": "/fallback.html", "dest": "/client/build/fallback.html" },
-    { "src": "/serverless-error.html", "dest": "/client/build/serverless-error.html" },
-    { "src": "/Arikatla_Hemanth_Kumar_Resume.pdf", "dest": "/client/build/Arikatla_Hemanth_Kumar_Resume.pdf" },
+    { "source": "/fallback.html", "destination": "/client/build/fallback.html" },
+    { "source": "/serverless-error.html", "destination": "/client/build/serverless-error.html" },
+    { "source": "/Arikatla_Hemanth_Kumar_Resume.pdf", "destination": "/client/build/Arikatla_Hemanth_Kumar_Resume.pdf" },
     
-    { "src": "/(.*)", "dest": "/client/build/index.html" }
+    { "source": "/(.*)", "destination": "/client/build/index.html" }
   ],
   "headers": [
     {
@@ -129,11 +120,5 @@
   "env": {
     "NODE_ENV": "production",
     "VERCEL": "true"
-  },
-  "functions": {
-    "server.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
   }
 }
