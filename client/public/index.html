@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -34,10 +34,38 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
     
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/static/css/main.css" as="style">
+    
+    <!-- Inline critical styles to prevent FOUC -->
+    <style>
+      /* Basic reset and Tailwind base styles */
+      *, *::before, *::after { box-sizing: border-box; }
+      body { margin: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+      #root { min-height: 100vh; display: flex; flex-direction: column; }
+      .loading { opacity: 0; transition: opacity 0.3s ease-in; }
+      .loaded { opacity: 1; }
+    </style>
+    
     <title>Arikatla Hemanth Kumar - Full Stack Developer</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    
+    <!-- Register Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/serviceWorker.js')
+            .then(registration => {
+              console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+              console.error('Service Worker registration failed:', error);
+            });
+        });
+      }
+    </script>
   </body>
-</html> 
+</html>

@@ -159,20 +159,20 @@ const Experience = () => {
 
 
   return (
-    <section id="experience" className="section-padding bg-gradient-to-br from-gray-50 to-white">
-      <div className="container-custom">
+    <section id="experience" className="section-padding py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white">
+      <div className="container-custom px-4 sm:px-6 md:px-8">
         <motion.div
           ref={timelineRef}
           initial={{ opacity: 0, y: 50 }}
           animate={timelineInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             My <span className="gradient-text">Journey</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-8"></div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-6 sm:mb-8"></div>
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             A timeline of my educational journey, professional growth, and key milestones in technology.
           </p>
         </motion.div>
@@ -231,23 +231,23 @@ const Experience = () => {
                     stiffness: 100,
                     damping: 12
                   }}
-                  className={`w-5/12 ${index % 2 === 0 ? 'mr-auto' : 'ml-auto'}`}
+                  className={`w-full sm:w-5/12 ${index % 2 === 0 ? 'mr-auto' : 'ml-auto'}`}
                   style={{ 
                     // Removed conflicting animation and animationDelay properties
-                    marginLeft: index % 2 === 0 ? '0' : '60px',
-                    marginRight: index % 2 === 0 ? '60px' : '0'
+                    marginLeft: index % 2 === 0 ? '0' : (window.innerWidth < 640 ? '0' : '60px'),
+                    marginRight: index % 2 === 0 ? (window.innerWidth < 640 ? '0' : '60px') : '0'
                   }}
                 >
-                  <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+                  <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
                     
-                    <div className="flex items-center mb-3">
-                      {item.type === 'education' && <FiBook className="text-blue-600 mr-2" />}
-                      {item.type === 'learning' && <FiBook className="text-green-600 mr-2" />}
-                      {item.type === 'internship' && <FiMapPin className="text-purple-600 mr-2" />}
-                      {item.type === 'milestone' && <FiAward className="text-orange-600 mr-2" />}
-                      {item.type === 'current' && <FiCalendar className="text-cyan-600 mr-2" />}
+                    <div className="flex items-center mb-2 sm:mb-3">
+                      {item.type === 'education' && <FiBook className="text-blue-600 mr-1 sm:mr-2 text-sm sm:text-base" />}
+                      {item.type === 'learning' && <FiBook className="text-green-600 mr-1 sm:mr-2 text-sm sm:text-base" />}
+                      {item.type === 'internship' && <FiMapPin className="text-purple-600 mr-1 sm:mr-2 text-sm sm:text-base" />}
+                      {item.type === 'milestone' && <FiAward className="text-orange-600 mr-1 sm:mr-2 text-sm sm:text-base" />}
+                      {item.type === 'current' && <FiCalendar className="text-cyan-600 mr-1 sm:mr-2 text-sm sm:text-base" />}
                       
-                      <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                      <span className={`text-xs font-medium px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full ${
                         item.type === 'education' ? 'bg-blue-100 text-blue-700' :
                         item.type === 'learning' ? 'bg-green-100 text-green-700' :
                         item.type === 'internship' ? 'bg-purple-100 text-purple-700' :
@@ -258,21 +258,21 @@ const Experience = () => {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-gray-600 mb-4">{item.description}</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1 sm:mb-2">{item.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{item.description}</p>
                     
                     
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-gray-700">Key Achievements:</h4>
+                    <div className="space-y-1 sm:space-y-2">
+                      <h4 className="text-xs sm:text-sm font-medium text-gray-700">Key Achievements:</h4>
                       {item.achievements.map((achievement, achievementIndex) => (
                         <motion.div
                           key={achievementIndex}
                           initial={{ opacity: 0, x: -20 }}
                           animate={timelineInView ? { opacity: 1, x: 0 } : {}}
                           transition={{ duration: 0.4, delay: 1.5 + index * 0.2 + achievementIndex * 0.1 }}
-                          className="flex items-center text-sm text-gray-600"
+                          className="flex items-center text-xs sm:text-sm text-gray-600"
                         >
-                          <div className="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
+                          <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-primary-500 rounded-full mr-1.5 sm:mr-2"></div>
                           {achievement}
                         </motion.div>
                       ))}
@@ -284,15 +284,15 @@ const Experience = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={timelineInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.4, delay: 1.7 + index * 0.2 }}
-                        className="mt-4"
+                        className="mt-3 sm:mt-4"
                       >
                         <a 
                           href={item.certificateLink} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-lg text-xs font-medium transition-all duration-300 hover:shadow-lg hover:scale-105"
+                          className="inline-flex items-center px-2 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-lg text-xs font-medium transition-all duration-300 hover:shadow-lg hover:scale-105"
                         >
-                          <FiAward className="mr-1" size={12} />
+                          <FiAward className="mr-1" size={10} />
                           View Certificate
                         </a>
                       </motion.div>
@@ -309,22 +309,22 @@ const Experience = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={timelineInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 2 }}
-          className="mt-16 text-center"
+          className="mt-12 sm:mt-16 text-center px-4 sm:px-0"
         >
-          <div className="bg-gradient-to-br from-primary-50 to-purple-50 p-8 rounded-2xl border border-primary-100 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">Currently</h3>
-            <p className="text-gray-600 mb-6">
+          <div className="bg-gradient-to-br from-primary-50 to-purple-50 p-5 sm:p-8 rounded-2xl border border-primary-100 max-w-2xl mx-auto">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 sm:mb-4">Currently</h3>
+            <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
               Completedmy MERN Stack training at DCT Academy and actively seeking opportunities 
               as a Full Stack Developer to apply my skills in real-world projects.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
               {['Job Ready', 'MERN Stack Expert', 'AI Enthusiast', 'Problem Solver'].map((tag, index) => (
                 <motion.span
                   key={tag}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={timelineInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.3, delay: 2.2 + index * 0.1 }}
-                  className="px-4 py-2 bg-white text-primary-700 rounded-full text-sm font-medium shadow-md border border-primary-200"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white text-primary-700 rounded-full text-xs sm:text-sm font-medium shadow-md border border-primary-200"
                 >
                   {tag}
                 </motion.span>
@@ -339,13 +339,13 @@ const Experience = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={showCertifications ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-24 text-center mb-16"
+          className="mt-16 sm:mt-24 text-center mb-10 sm:mb-16 px-4 sm:px-0"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             My <span className="gradient-text">Certifications</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-8"></div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-6 sm:mb-8"></div>
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             Professional certifications and achievements that validate my skills and expertise.
           </p>
         </motion.div>
@@ -354,7 +354,7 @@ const Experience = () => {
           variants={containerVariants}
           initial="hidden"
           animate={showCertifications ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto mt-8 sm:mt-12 px-4 sm:px-6 md:px-8"
         >
           {certificationData.map((cert, index) => (
             <motion.div
@@ -363,47 +363,47 @@ const Experience = () => {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100"
                 // Removed conflicting animation and animationDelay properties
               >
-              <div className={`h-3 bg-gradient-to-r ${cert.color}`}></div>
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900">{cert.title}</h3>
-                  <span className="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium">
+              <div className={`h-2 sm:h-3 bg-gradient-to-r ${cert.color}`}></div>
+              <div className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 sm:mb-4">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-0">{cert.title}</h3>
+                  <span className="self-start px-2 sm:px-3 py-0.5 sm:py-1 bg-primary-50 text-primary-700 rounded-full text-xs sm:text-sm font-medium">
                     {cert.date}
                   </span>
                 </div>
                 
-                <div className="flex items-center text-gray-600 mb-4">
-                  <FiAward className="mr-2 text-primary-600" />
-                  <span>{cert.issuer}</span>
+                <div className="flex items-center text-gray-600 mb-3 sm:mb-4">
+                  <FiAward className="mr-1.5 sm:mr-2 text-primary-600 text-sm sm:text-base" />
+                  <span className="text-sm sm:text-base">{cert.issuer}</span>
                 </div>
                 
-                <p className="text-gray-600 mb-5">{cert.description}</p>
+                <p className="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-5">{cert.description}</p>
                 
                 
-                <div className="mb-5">
+                <div className="mb-4 sm:mb-5">
                   <a 
                     href={cert.certificateLink} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:scale-105"
+                    className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 hover:shadow-lg hover:scale-105"
                   >
-                    <FiAward className="mr-2" />
+                    <FiAward className="mr-1.5 sm:mr-2" size={12} />
                     View Certificate
                   </a>
                 </div>
                 
-                <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-gray-700 mb-2">Skills Covered:</h4>
-                  <div className="flex flex-wrap gap-2">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <h4 className="text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Skills Covered:</h4>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {cert.skills.map((skill, index) => (
                       <motion.div 
                         key={index}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={showCertifications ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-                        className="flex items-center text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full"
+                        className="flex items-center text-xs sm:text-sm text-gray-600 bg-gray-50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full"
                       >
-                        <FiCheckCircle className="mr-1 text-primary-500" size={12} />
+                        <FiCheckCircle className="mr-1 text-primary-500" size={10} />
                         {skill}
                       </motion.div>
                     ))}

@@ -40,15 +40,15 @@ const Hero = () => {
   ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-gray-50 to-white">
-      <div className="absolute inset-0">
+    <section id="home" className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-gray-50 to-white pt-16 sm:pt-20">
+      <div className="absolute inset-0 pointer-events-none">
         {floatingElements.map((element, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, scale: 0 }}
             animate={inView ? { opacity: 0.1, scale: 1 } : {}}
             transition={{ delay: element.delay, duration: 2 }}
-            className={`absolute text-primary-400 ${element.size}`}
+            className={`absolute text-primary-400 ${element.size} hidden sm:block`}
             style={{
               left: `${20 + index * 15}%`,
               top: `${30 + index * 10}%`,
@@ -61,20 +61,20 @@ const Hero = () => {
       </div>
 
       <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           <motion.div
             ref={ref}
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-5xl lg:text-6xl font-bold text-gray-900"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900"
               >
                 Hi, I'm{' '}
                 <span className="gradient-text">Arikatla Hemanth Kumar</span>
@@ -84,7 +84,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-2xl lg:text-3xl text-gray-600 font-medium"
+                className="text-xl sm:text-2xl lg:text-3xl text-gray-600 font-medium"
               >
                 <Typewriter
                   options={{

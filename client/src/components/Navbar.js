@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
@@ -42,16 +42,16 @@ const Navbar = () => {
       }`}
     >
       <div className="container-custom">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-2xl font-bold text-primary-600"
+            className="text-xl sm:text-2xl font-bold text-primary-600"
           >
             AHK
           </motion.div>
 
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-4 lg:space-x-8">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.name}
@@ -59,7 +59,7 @@ const Navbar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => scrollToSection(item.href)}
-                className="text-gray-700 hover:text-primary-600 transition-colors duration-300 font-medium"
+                className="text-sm lg:text-base text-gray-700 hover:text-primary-600 transition-colors duration-300 font-medium px-2 py-1"
               >
                 {item.name}
               </motion.button>
@@ -69,36 +69,43 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-primary-600 transition-colors duration-300"
+              className="text-gray-700 hover:text-primary-600 transition-colors duration-300 p-2"
+              aria-label="Toggle menu"
             >
-              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}
             </button>
           </div>
         </div>
 
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-white/95 backdrop-blur-md rounded-lg shadow-lg mt-2 py-4"
-          >
-            <div className="flex flex-col space-y-4 px-4">
-              {navItems.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  className="text-gray-700 hover:text-primary-600 transition-colors duration-300 font-medium text-left"
-                >
-                  {item.name}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="md:hidden bg-white/95 backdrop-blur-md rounded-lg shadow-lg mt-2 overflow-hidden"
+            >
+              <div className="flex flex-col py-4">
+                {navItems.map((item, index) => (
+                  <motion.button
+                    key={item.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    onClick={() => scrollToSection(item.href)}
+                    className="text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition-colors duration-300 font-medium text-left py-3 px-6"
+                  >
+                    {item.name}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
 };
 
-export default Navbar; 
+export default Navbar;

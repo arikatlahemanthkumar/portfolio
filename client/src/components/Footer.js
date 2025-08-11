@@ -37,13 +37,13 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="container-custom py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+      <div className="container-custom px-4 sm:px-6 py-8 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4">
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
               <span className="gradient-text">Arikatla Hemanth Kumar</span>
             </h3>
-            <p className="text-gray-300 mb-6 max-w-md">
+            <p className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 max-w-md">
               A passionate Full Stack Developer dedicated to creating innovative web solutions. 
               Specialized in MERN stack development and modern web technologies.
             </p>
@@ -54,7 +54,7 @@ const Footer = () => {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`text-gray-400 text-xl transition-colors duration-300 ${link.color}`}
+                  className={`text-gray-400 text-lg sm:text-xl transition-colors duration-300 ${link.color}`}
                   aria-label={link.name}
                 >
                   <link.icon />
@@ -64,13 +64,13 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Quick Links</h4>
+            <ul className="space-y-1.5 sm:space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                    className="text-gray-300 text-sm sm:text-base hover:text-white transition-colors duration-300"
                   >
                     {link.name}
                   </a>
@@ -80,8 +80,8 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-            <div className="space-y-2 text-gray-300">
+            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact Info</h4>
+            <div className="space-y-1.5 sm:space-y-2 text-gray-300 text-sm sm:text-base">
               <p>+91 9492906798</p>
               <p>arikatlahemanthkumar@gmail.com</p>
               <p>Tirupati, Andhra Pradesh</p>
@@ -93,9 +93,9 @@ const Footer = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="border-t border-gray-800 mt-8 pt-8 text-center"
+          className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center"
         >
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-xs sm:text-sm">
             © {currentYear} Hemanth Kumar Arikatla. All rights reserved. Made with{' '}
             <FiHeart className="inline text-red-500" /> using React & Node.js
           </p>
@@ -105,4 +105,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

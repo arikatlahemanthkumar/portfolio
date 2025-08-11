@@ -67,20 +67,20 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="section-padding bg-white">
-      <div className="container-custom">
+    <section id="skills" className="py-12 sm:py-16 md:py-20 bg-white">
+      <div className="container-custom px-4 sm:px-6">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             My <span className="gradient-text">Skills</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-8"></div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-4 sm:mb-8"></div>
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             A comprehensive overview of my technical skills and expertise across various technologies and tools.
           </p>
         </motion.div>
@@ -89,13 +89,13 @@ const Skills = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12"
         >
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-full font-medium transition-all duration-300 ${
                 activeCategory === category.id
                   ? 'bg-primary-600 text-white shadow-lg'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -168,4 +168,4 @@ const Skills = () => {
   );
 };
 
-export default Skills; 
+export default Skills;

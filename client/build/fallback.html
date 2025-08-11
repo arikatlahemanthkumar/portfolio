@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <title>Arikatla Hemanth Kumar - Loading...</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background-color: #f8f9fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .container {
+      max-width: 600px;
+      background-color: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      margin-top: 0;
+      color: #2d3748;
+    }
+    p {
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #4299e1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #3182ce;
+    }
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Loading Portfolio...</h1>
+    <div class="loader"></div>
+    <p>The portfolio is taking longer than expected to load. This might be due to a slow connection or a temporary server issue.</p>
+    <p>The page will automatically refresh in 5 seconds, or you can try refreshing manually.</p>
+    <button onclick="window.location.href='/'">Refresh Now</button>
+  </div>
+
+  <script>
+    // Attempt to reload the main page after 5 seconds
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 5000);
+  </script>
+</body>
+</html>

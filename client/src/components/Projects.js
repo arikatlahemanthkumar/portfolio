@@ -15,7 +15,7 @@ const Projects = () => {
       image: '/ride-share.png',
       technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB','Redux', 'Nodemailer', 'Cloudinary','Stripe'],
       features: [
-        'Real-time location tracking',
+        'Real-time Seat Selection',
         'Secure payment processing',
         'User authentication & authorization',
         'Responsive mobile design',
@@ -59,20 +59,20 @@ const Projects = () => {
     : projects.filter(project => project.category === activeFilter);
 
   return (
-    <section id="projects" className="section-padding bg-gray-50">
-      <div className="container-custom">
+    <section id="projects" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50">
+      <div className="container-custom px-4 sm:px-6">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Featured <span className="gradient-text">Projects</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-8"></div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto mb-4 sm:mb-8"></div>
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             Here are some of my recent projects that showcase my skills in full-stack development, 
             AI/ML integration, and modern web technologies.
           </p>
@@ -82,13 +82,13 @@ const Projects = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12"
         >
           {filters.map((filter) => (
             <button
               key={filter.id}
               onClick={() => setActiveFilter(filter.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-full font-medium transition-all duration-300 ${
                 activeFilter === filter.id
                   ? 'bg-primary-600 text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
@@ -212,4 +212,4 @@ const Projects = () => {
   );
 };
 
-export default Projects; 
+export default Projects;
