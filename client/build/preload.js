@@ -115,37 +115,8 @@
   const head = document.head || document.getElementsByTagName('head')[0];
   head.appendChild(inlineStyles);
 
-  // Improved function to warm up the connection to the backend API with retry logic
-  function warmUpApiConnection() {
-    console.log('Warming up API connection...');
-    
-    // Use fetch with timeout and retry logic
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-    
-    fetch('/api/projects', {
-      method: 'GET',
-      signal: controller.signal,
-      headers: {
-        'Accept': 'application/json',
-        'x-warmup-request': 'true' // Custom header to identify warmup requests
-      }
-    })
-    .then(response => {
-      clearTimeout(timeoutId);
-      console.log('API connection successful:', response.status);
-      // Don't need to process the response, just warming up the connection
-    })
-    .catch(error => {
-      clearTimeout(timeoutId);
-      console.log('API warmup failed, retrying in 2s:', error.message);
-      // Retry once after 2 seconds
-      setTimeout(warmUpApiConnection, 2000);
-    });
-  }
-
-  // Warm up connection after a short delay to allow the page to load first
-  setTimeout(warmUpApiConnection, 1500);
+  // Removed API warmup calls to improve loading speed
+  // The portfolio now loads instantly without waiting for API connections
 
   // Add a class to the body when all resources are loaded
   window.addEventListener('load', function() {

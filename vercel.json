@@ -20,8 +20,7 @@
     { "source": "/favicon.ico", "destination": "/client/build/favicon.ico" },
     { "source": "/asset-manifest.json", "destination": "/client/build/asset-manifest.json" },
     { "source": "/manifest.json", "destination": "/client/build/manifest.json" },
-    { "source": "/serviceWorker.js", "destination": "/client/build/serviceWorker.js" },
-    { "source": "/preload.js", "destination": "/client/build/preload.js" },
+
     
     { "source": "/profile-image.jpg", "destination": "/client/build/profile-image.jpg" },
     { "source": "/og-image.jpg", "destination": "/client/build/og-image.jpg" },
@@ -30,8 +29,7 @@
     { "source": "/default-image.svg", "destination": "/client/build/default-image.svg" },
     { "source": "/default-icon.svg", "destination": "/client/build/default-icon.svg" },
     
-    { "source": "/fallback.html", "destination": "/client/build/fallback.html" },
-    { "source": "/serverless-error.html", "destination": "/client/build/serverless-error.html" },
+
     { "source": "/Arikatla_Hemanth_Kumar_Resume.pdf", "destination": "/client/build/Arikatla_Hemanth_Kumar_Resume.pdf" },
     
     { "source": "/(.*)", "destination": "/client/build/index.html" }
@@ -64,40 +62,8 @@
         { "key": "Content-Type", "value": "image/svg+xml" }
       ]
     },
-    {
-      "source": "/serviceWorker.js",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
-        { "key": "Content-Type", "value": "application/javascript" },
-        { "key": "Pragma", "value": "no-cache" },
-        { "key": "Expires", "value": "0" }
-      ]
-    },
-    {
-      "source": "/preload.js",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
-        { "key": "Content-Type", "value": "application/javascript" },
-        { "key": "Pragma", "value": "no-cache" },
-        { "key": "Expires", "value": "0" }
-      ]
-    },
-    {
-      "source": "/fallback.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
-        { "key": "Pragma", "value": "no-cache" },
-        { "key": "Expires", "value": "0" }
-      ]
-    },
-    {
-      "source": "/serverless-error.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
-        { "key": "Pragma", "value": "no-cache" },
-        { "key": "Expires", "value": "0" }
-      ]
-    },
+
+
     {
       "source": "/api/(.*)",
       "headers": [
@@ -109,7 +75,7 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },

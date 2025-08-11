@@ -55,8 +55,7 @@
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
     
-    <!-- Preload script to improve initial loading -->
-    <script src="%PUBLIC_URL%/preload.js"></script>
+    <!-- Removed preload script for faster loading -->
     
     <title>Arikatla Hemanth Kumar - Full Stack Developer</title>
   </head>
@@ -72,158 +71,26 @@
     
     <!-- Script to handle loading states and detect errors -->
     <script>
-      // Function to detect serverless function errors
-      function detectServerlessErrors() {
-        // Check for error messages in the DOM
-        const bodyText = document.body.innerText;
-        if (bodyText.includes('Serverless Function crashed') || 
-            bodyText.includes('FUNCTION_INVOCATION_FAILED') || 
-            bodyText.includes('INTERNAL_SERVER_ERROR') ||
-            (bodyText.includes('500') && bodyText.includes('Internal Server Error'))) {
-          
-          console.error('Serverless function error detected, redirecting to custom error page');
-          
-          // Extract error code and ID if available
-          let errorCode = 'FUNCTION_INVOCATION_FAILED';
-          let errorId = '';
-          
-          const codeMatch = bodyText.match(/Code:\s*["']?([\w_-]+)["']?/i);
-          if (codeMatch && codeMatch[1]) {
-            errorCode = codeMatch[1];
-          }
-          
-          const idMatch = bodyText.match(/ID:\s*["']?([\w:_\-]+)["']?/i);
-          if (idMatch && idMatch[1]) {
-            errorId = idMatch[1];
-          }
-          
-          // Redirect to serverless error page with error info
-          window.location.href = '/serverless-error.html?code=' + encodeURIComponent(errorCode) + 
-                                '&id=' + encodeURIComponent(errorId) + 
-                                '&t=' + Date.now();
-          return true;
-        }
-        return false;
-      }
-      
-      // Check for errors immediately
-      if (detectServerlessErrors()) {
-        // Stop execution if errors were found
-        throw new Error('Redirecting to custom error page');
-      }
-      
-      // Hide the loader when the app is ready
+      // Simple loading handler - no error detection to avoid unnecessary redirects
       window.addEventListener('load', function() {
-        // Check for errors again after load
-        if (detectServerlessErrors()) return;
-        
         // Add loaded class to root to fade in content
         document.getElementById('root').classList.add('loaded');
-        
-        // Hide the initial loader after a short delay
-        setTimeout(function() {
-          var loader = document.getElementById('initialLoader');
-          if (loader) {
-            loader.style.opacity = '0';
-            setTimeout(function() {
-              loader.style.display = 'none';
-            }, 300);
-          }
-        }, 500);
-      });
-      
-      // Add error event listener to detect runtime errors
-      window.addEventListener('error', function(event) {
-        console.error('Runtime error detected:', event.error);
-        
-        // Only redirect for certain types of errors
-        if (event.error && event.error.message && 
-            (event.error.message.includes('fetch') || 
-             event.error.message.includes('network') || 
-             event.error.message.includes('API') || 
-             event.error.message.includes('server'))) {
-          
-          window.location.href = '/fallback.html?error=runtime&code=JS_ERROR&t=' + Date.now();
+
+        // Hide the initial loader immediately for faster experience
+        var loader = document.getElementById('initialLoader');
+        if (loader) {
+          loader.style.opacity = '0';
+          setTimeout(function() {
+            loader.style.display = 'none';
+          }, 200);
         }
       });
     </script>
     
-    <!-- Register Service Worker with improved error handling -->
+    <!-- Simplified - no service worker registration to avoid caching issues -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          // Delay service worker registration slightly to prioritize app loading
-          setTimeout(() => {
-            // Create a message channel for communication with the service worker
-            const messageChannel = new MessageChannel();
-            messageChannel.port1.onmessage = (event) => {
-              if (event.data && event.data.type === 'CACHE_UPDATED') {
-                console.log('New content is available; please refresh.');
-                
-                // Show update notification to user
-                if (!document.querySelector('.error-message')) {
-                  const notification = document.createElement('div');
-                  notification.className = 'error-message';
-                  notification.innerHTML = '<strong>Update Available</strong> <button onclick="location.reload(true)">Refresh Now</button>';
-                  document.body.insertBefore(notification, document.body.firstChild);
-                }
-              }
-            };
-            
-            navigator.serviceWorker.register('/serviceWorker.js')
-              .then(registration => {
-                console.log('Service Worker registered with scope:', registration.scope);
-                
-                // Trigger an update check
-                registration.update();
-                
-                // Log the service worker state
-                if (registration.installing) {
-                  console.log('Service worker installing');
-                } else if (registration.waiting) {
-                  console.log('Service worker installed');
-                } else if (registration.active) {
-                  console.log('Service worker active');
-                  
-                  // If the service worker is already controlling this page,
-                  // send the message channel port to it
-                  if (navigator.serviceWorker.controller) {
-                    navigator.serviceWorker.controller.postMessage({
-                      type: 'INIT_PORT'
-                    }, [messageChannel.port2]);
-                  }
-                }
-              })
-              .catch(error => {
-                console.error('Service Worker registration failed:', error);
-                // Redirect to fallback page on service worker registration failure
-                window.location.href = '/fallback.html?error=sw&code=SW_REGISTRATION_FAILED&t=' + Date.now();
-              });
-          }, 1000); // Delay registration by 1 second
-        });
-        
-        // Handle service worker controlled pages
-        if (navigator.serviceWorker.controller) {
-          console.log('This page is currently controlled by a service worker');
-        }
-      }
-    </script>
-    
-    <!-- Handle unhandled promise rejections -->
-    <script>
-      window.addEventListener('unhandledrejection', function(event) {
-        console.error('Unhandled promise rejection:', event.reason);
-        
-        // Only redirect for certain types of errors
-        if (event.reason && event.reason.message && 
-            (event.reason.message.includes('fetch') || 
-             event.reason.message.includes('network') || 
-             event.reason.message.includes('API') || 
-             event.reason.message.includes('server'))) {
-          
-          window.location.href = '/fallback.html?error=promise&code=PROMISE_REJECTION&t=' + Date.now();
-        }
-      });
+      // Portfolio loads instantly without service worker complexity
+      console.log('Portfolio loading without service worker for optimal performance');
     </script>
   </body>
 </html>

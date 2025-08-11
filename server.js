@@ -39,22 +39,14 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// API routes with connection check middleware for serverless functions
+// Simplified middleware - let routes handle their own DB connection errors
 const dbConnectionMiddleware = async (req, res, next) => {
   // Skip DB connection check for warmup requests
   if (req.headers['x-warmup-request'] === 'true') {
     return res.status(200).json({ status: 'ok', message: 'Warmup request received' });
   }
-  
-  // Check if we have a DB connection
-  const connected = await connectToDB();
-  if (!connected) {
-    return res.status(503).json({ 
-      error: 'Database connection unavailable', 
-      message: 'The server is temporarily unavailable. Please try again later.'
-    });
-  }
-  
+
+  // Don't block requests - let individual routes handle DB errors
   next();
 };
 
