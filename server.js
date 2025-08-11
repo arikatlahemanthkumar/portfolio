@@ -31,9 +31,20 @@ app.use(cors());
 app.use('/api/contact', contactRoutes);
 app.use('/api/projects', projectRoutes);
 
-// Serve frontend
-app.use(express.static(path.join(__dirname, 'client/build')));
+// Serve frontend - only for non-API routes and only when not matched by Vercel's static file routing
+// This ensures HTML5 history API works for client-side routing
 app.get('*', (req, res) => {
+  // Skip API routes as they're handled by specific middleware
+  if (req.path.startsWith('/api')) return;
+  
+  // Set cache control headers for HTML
+  res.set({
+    'Cache-Control': 'public, max-age=0, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0'
+  });
+  
+  // Send the React app's index.html for client-side routing
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
@@ -44,6 +55,19 @@ const PORT = process.env.PORT || 5000;
 if (process.env.VERCEL === undefined) {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  
+  // Check if the request is for an API endpoint
+  if (req.path.startsWith('/api')) {
+    return res.status(500).json({ error: 'Server error occurred' });
+  }
+  
+  // For non-API requests, send a basic error message
+  res.status(500).send('Server error occurred. Please try refreshing the page.');
+});
 
 // Export for Vercel serverless functions
 export default app;
