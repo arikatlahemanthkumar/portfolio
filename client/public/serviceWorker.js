@@ -1,14 +1,21 @@
 // Service Worker for Portfolio App
-const CACHE_NAME = 'portfolio-cache-v1';
+const CACHE_NAME = 'portfolio-cache-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/fallback.html',
-  '/static/css/main.css',
-  '/static/js/main.js',
   '/favicon.ico',
   '/manifest.json',
-  '/static/media/profile.jpg' // Assuming there's a profile image
+  '/profile-image.jpg',
+  '/chatbot.jpg',
+  '/ride-share.png',
+  '/preload.js'
+];
+
+// Assets that should be cached after they're first used
+const RUNTIME_CACHE_URLS = [
+  // CSS and JS files will be cached at runtime with their hash names
+  // since we don't know the exact filenames at service worker registration time
 ];
 
 // Install event - cache static assets
@@ -56,7 +63,7 @@ function isCrossOrigin(url) {
   return url.origin !== self.location.origin;
 }
 
-// Fetch event - serve from cache or network
+// Fetch event - serve from cache or network with improved strategy
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   
@@ -70,19 +77,61 @@ self.addEventListener('fetch', event => {
     return;
   }
   
-  // For navigation requests (HTML pages)
+  // For navigation requests (HTML pages) - network-first strategy
   if (isNavigationRequest(event.request)) {
     event.respondWith(
       fetch(event.request)
+        .then(response => {
+          // Cache the latest version of the page
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+          return response;
+        })
         .catch(() => {
-          // If network fails, serve the fallback page
-          return caches.match('/fallback.html');
+          // If network fails, try to serve from cache
+          return caches.match(event.request)
+            .then(cachedResponse => {
+              if (cachedResponse) {
+                return cachedResponse;
+              }
+              // If not in cache either, serve the fallback page
+              return caches.match('/fallback.html');
+            });
         })
     );
     return;
   }
   
-  // For other requests (CSS, JS, images, etc.)
+  // For CSS and JS files - cache-first for faster loading, but update cache
+  if (event.request.url.match(/\.(css|js)$/)) {
+    event.respondWith(
+      caches.match(event.request)
+        .then(cachedResponse => {
+          // Return cached response immediately for faster loading
+          const fetchPromise = fetch(event.request)
+            .then(networkResponse => {
+              // Update the cache with the new version in the background
+              if (networkResponse && networkResponse.status === 200) {
+                const responseToCache = networkResponse.clone();
+                caches.open(CACHE_NAME).then(cache => {
+                  cache.put(event.request, responseToCache);
+                });
+              }
+              return networkResponse;
+            })
+            .catch(error => {
+              console.error('Fetch error for CSS/JS:', error);
+            });
+          
+          return cachedResponse || fetchPromise;
+        })
+    );
+    return;
+  }
+  
+  // For other requests (images, etc.) - cache-first strategy
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
@@ -110,9 +159,9 @@ self.addEventListener('fetch', event => {
           })
           .catch(error => {
             console.error('Fetch error:', error);
-            // For image requests, you could return a default image
+            // For image requests, return a default image if available
             if (event.request.url.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-              return caches.match('/static/media/placeholder.jpg');
+              return caches.match('/profile-image.jpg');
             }
           });
       })

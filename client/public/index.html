@@ -26,7 +26,7 @@
     <meta property="twitter:description" content="MERN Stack Developer Portfolio showcasing projects and skills" />
     <meta property="twitter:image" content="%PUBLIC_URL%/og-image.jpg" />
 
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/profile-image.jpg" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
     <!-- Google Fonts -->
@@ -34,24 +34,58 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
     
-    <!-- Preload critical CSS -->
+    <!-- Preload critical CSS and JS -->
     <link rel="preload" href="/static/css/main.css" as="style">
+    <link rel="preload" href="/static/js/main.js" as="script">
     
     <!-- Inline critical styles to prevent FOUC -->
     <style>
       /* Basic reset and Tailwind base styles */
       *, *::before, *::after { box-sizing: border-box; }
-      body { margin: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+      body { margin: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; background-color: #f8f9fa; }
       #root { min-height: 100vh; display: flex; flex-direction: column; }
       .loading { opacity: 0; transition: opacity 0.3s ease-in; }
       .loaded { opacity: 1; }
+      /* Loading indicator styles */
+      .initial-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa; z-index: 9999; }
+      .spinner { width: 40px; height: 40px; border: 3px solid rgba(66, 153, 225, 0.2); border-radius: 50%; border-top-color: #4299e1; animation: spin 1s linear infinite; }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
+    
+    <!-- Preload script to improve initial loading -->
+    <script src="%PUBLIC_URL%/preload.js"></script>
     
     <title>Arikatla Hemanth Kumar - Full Stack Developer</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    
+    <!-- Initial loading indicator that will be hidden once React loads -->
+    <div class="initial-loader" id="initialLoader">
+      <div class="spinner"></div>
+    </div>
+    
+    <div id="root" class="loading"></div>
+    
+    <!-- Script to handle loading states -->
+    <script>
+      // Hide the loader when the app is ready
+      window.addEventListener('load', function() {
+        // Add loaded class to root to fade in content
+        document.getElementById('root').classList.add('loaded');
+        
+        // Hide the initial loader after a short delay
+        setTimeout(function() {
+          var loader = document.getElementById('initialLoader');
+          if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(function() {
+              loader.style.display = 'none';
+            }, 300);
+          }
+        }, 500);
+      });
+    </script>
     
     <!-- Register Service Worker -->
     <script>

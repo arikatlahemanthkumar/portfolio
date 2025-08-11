@@ -4,13 +4,18 @@ const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/fallback.html',
-  '/static/css/main.3eb1688e.css',
-  '/static/js/main.c2671409.js',
   '/favicon.ico',
   '/manifest.json',
   '/profile-image.jpg',
   '/chatbot.jpg',
-  '/ride-share.png'
+  '/ride-share.png',
+  '/preload.js'
+];
+
+// Assets that should be cached after they're first used
+const RUNTIME_CACHE_URLS = [
+  // CSS and JS files will be cached at runtime with their hash names
+  // since we don't know the exact filenames at service worker registration time
 ];
 
 // Install event - cache static assets
