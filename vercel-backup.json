@@ -1,0 +1,91 @@
+{
+  "version": 2,
+  "builds": [
+    { 
+      "src": "server.js", 
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "includeFiles": ["client/build/**"]
+      }
+    },
+    { "src": "client/build/**", "use": "@vercel/static" }
+  ],
+  "rewrites": [
+    { "source": "/api/health", "destination": "/server.js" },
+    { "source": "/api/warmup", "destination": "/server.js" },
+    { "source": "/api/(.*)", "destination": "/server.js" },
+    
+    { "source": "/static/(.*)", "destination": "/client/build/static/$1" },
+    { "source": "/favicon.ico", "destination": "/client/build/favicon.ico" },
+    { "source": "/asset-manifest.json", "destination": "/client/build/asset-manifest.json" },
+    { "source": "/manifest.json", "destination": "/client/build/manifest.json" },
+
+    
+    { "source": "/profile-image.jpg", "destination": "/client/build/profile-image.jpg" },
+    { "source": "/og-image.jpg", "destination": "/client/build/og-image.jpg" },
+    { "source": "/chatbot.jpg", "destination": "/client/build/chatbot.jpg" },
+    { "source": "/ride-share.png", "destination": "/client/build/ride-share.png" },
+    { "source": "/default-image.svg", "destination": "/client/build/default-image.svg" },
+    { "source": "/default-icon.svg", "destination": "/client/build/default-icon.svg" },
+    
+
+    { "source": "/Arikatla_Hemanth_Kumar_Resume.pdf", "destination": "/client/build/Arikatla_Hemanth_Kumar_Resume.pdf" },
+    
+    { "source": "/(.*)", "destination": "/client/build/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/static/css/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Type", "value": "text/css" }
+      ]
+    },
+    {
+      "source": "/static/js/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Type", "value": "application/javascript" }
+      ]
+    },
+    {
+      "source": "/static/media/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).svg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Type", "value": "image/svg+xml" }
+      ]
+    },
+
+
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "VERCEL": "true"
+  },
+  "public": true
+}
