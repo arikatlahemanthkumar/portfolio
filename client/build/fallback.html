@@ -4,12 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <title>Arikatla Hemanth Kumar - Loading...</title>
+  <title>Arikatla Hemanth Kumar - Loading Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       -webkit-font-smoothing: antialiased;
       background-color: #f8f9fa;
       color: #333;
@@ -31,10 +34,12 @@
     h1 {
       margin-top: 0;
       color: #2d3748;
+      font-weight: 600;
     }
     p {
       line-height: 1.6;
       margin-bottom: 20px;
+      color: #4a5568;
     }
     button {
       background-color: #4299e1;
@@ -44,17 +49,20 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 16px;
-      transition: background-color 0.3s;
+      font-weight: 500;
+      transition: all 0.2s ease;
     }
     button:hover {
       background-color: #3182ce;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     .loader {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #3498db;
+      border: 3px solid rgba(66, 153, 225, 0.2);
+      border-top: 3px solid #4299e1;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       animation: spin 1s linear infinite;
       margin: 20px auto;
     }
@@ -62,22 +70,102 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    .retry-count {
+      font-size: 14px;
+      color: #718096;
+      margin-top: 10px;
+    }
+    .progress {
+      width: 100%;
+      height: 4px;
+      background-color: #e2e8f0;
+      border-radius: 2px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #4299e1;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Loading Portfolio...</h1>
     <div class="loader"></div>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
     <p>The portfolio is taking longer than expected to load. This might be due to a slow connection or a temporary server issue.</p>
-    <p>The page will automatically refresh in 5 seconds, or you can try refreshing manually.</p>
-    <button onclick="window.location.href='/'">Refresh Now</button>
+    <p>The page will automatically retry loading in <span id="countdown">5</span> seconds, or you can try refreshing manually.</p>
+    <button onclick="retryLoading()">Refresh Now</button>
+    <div class="retry-count" id="retryCount"></div>
   </div>
 
   <script>
-    // Attempt to reload the main page after 5 seconds
-    setTimeout(() => {
+    // Track retry attempts
+    let retryAttempts = 0;
+    const maxRetries = 3;
+    let countdownValue = 5;
+    let countdownInterval;
+    let progressInterval;
+    
+    // Update the retry count display
+    document.getElementById('retryCount').textContent = 
+      retryAttempts > 0 ? `Retry attempt ${retryAttempts} of ${maxRetries}` : '';
+    
+    // Function to retry loading the main page
+    function retryLoading() {
+      retryAttempts++;
+      
+      // Clear any existing intervals
+      clearInterval(countdownInterval);
+      clearInterval(progressInterval);
+      
+      // If we've reached max retries, try clearing cache and reloading
+      if (retryAttempts >= maxRetries) {
+        // Try to clear cache by adding a cache-busting parameter
+        window.location.href = '/?nocache=' + Date.now();
+        return;
+      }
+      
+      // Otherwise just reload
       window.location.href = '/';
-    }, 5000);
+    }
+    
+    // Start countdown
+    function startCountdown() {
+      // Reset countdown value
+      countdownValue = 5;
+      document.getElementById('countdown').textContent = countdownValue;
+      
+      // Reset progress bar
+      const progressBar = document.getElementById('progressBar');
+      progressBar.style.width = '0%';
+      
+      // Update progress bar
+      progressInterval = setInterval(() => {
+        const progressPercent = (5 - countdownValue) * 20 + (1 / 50) * 20;
+        progressBar.style.width = `${progressPercent}%`;
+      }, 100);
+      
+      // Start countdown
+      countdownInterval = setInterval(() => {
+        countdownValue--;
+        document.getElementById('countdown').textContent = countdownValue;
+        
+        if (countdownValue <= 0) {
+          clearInterval(countdownInterval);
+          clearInterval(progressInterval);
+          retryLoading();
+        }
+      }, 1000);
+    }
+    
+    // Start the countdown when page loads
+    startCountdown();
   </script>
 </body>
 </html>

@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-// Initialize database connection
+
 (async () => {
   try {
     await configureDB();
@@ -31,43 +31,67 @@ app.use(cors());
 app.use('/api/contact', contactRoutes);
 app.use('/api/projects', projectRoutes);
 
-// Serve frontend - only for non-API routes and only when not matched by Vercel's static file routing
-// This ensures HTML5 history API works for client-side routing
+
+
+const buildPath = path.join(__dirname, "client", "build");
+
+// Serve static files with proper caching headers
+app.use(express.static(buildPath, {
+  etag: true, // Enable ETag for caching
+  lastModified: true, // Enable Last-Modified for caching
+  setHeaders: (res, path) => {
+    // Set caching headers based on file type
+    if (path.endsWith('.html')) {
+      // HTML files should not be cached aggressively
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    } else if (path.match(/\.(css|js)$/)) {
+      // CSS and JS files can be cached but should revalidate
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (path.match(/\.(jpg|jpeg|png|gif|webp|svg|ico)$/)) {
+      // Images can be cached for longer periods
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+  }
+}));
+
 app.get('*', (req, res) => {
-  // Skip API routes as they're handled by specific middleware
+  // Skip API routes as they're handled by their own middleware
   if (req.path.startsWith('/api')) return;
-  
-  // Set cache control headers for HTML
+
+  // Set appropriate headers for HTML content
   res.set({
     'Cache-Control': 'public, max-age=0, must-revalidate',
     'Pragma': 'no-cache',
-    'Expires': '0'
+    'Expires': '0',
+    'Content-Type': 'text/html; charset=utf-8'
   });
   
-  // Send the React app's index.html for client-side routing
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  // Send the index.html file for client-side routing
+  res.sendFile(path.join(buildPath, "index.html"), {
+    // Add error handling for sendFile
+    error: (err) => {
+      console.error('Error sending index.html:', err);
+      res.status(500).send('Error loading the application. Please try again.');
+    }
+  });
 });
 
-// For both local development and Vercel serverless functions
+
 const PORT = process.env.PORT || 5000;
 
-// Only start the server if not running on Vercel
 if (process.env.VERCEL === undefined) {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
-// Error handling middleware
+
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
   
-  // Check if the request is for an API endpoint
   if (req.path.startsWith('/api')) {
     return res.status(500).json({ error: 'Server error occurred' });
   }
-  
-  // For non-API requests, send a basic error message
+
   res.status(500).send('Server error occurred. Please try refreshing the page.');
 });
 
-// Export for Vercel serverless functions
 export default app;
