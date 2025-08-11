@@ -2,11 +2,25 @@
   "version": 2,
   "builds": [
     {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "includeFiles": [
+          "client/build/**"
+        ]
+      }
+    },
+    {
       "src": "client/build/**",
       "use": "@vercel/static"
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/server.js"
+    },
     {
       "source": "/static/(.*)",
       "destination": "/client/build/static/$1"
@@ -39,5 +53,8 @@
       "source": "/(.*)",
       "destination": "/client/build/index.html"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }

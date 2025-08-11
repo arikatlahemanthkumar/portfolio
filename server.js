@@ -39,67 +39,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Simplified middleware - let routes handle their own DB connection errors
-const dbConnectionMiddleware = async (req, res, next) => {
-  // Skip DB connection check for warmup requests
-  if (req.headers['x-warmup-request'] === 'true') {
-    return res.status(200).json({ status: 'ok', message: 'Warmup request received' });
-  }
+// Direct API routes without middleware
+app.use('/api/contact', contactRoutes);
+app.use('/api/projects', projectRoutes);
 
-  // Don't block requests - let individual routes handle DB errors
-  next();
-};
-
-// Apply the middleware to API routes
-app.use('/api/contact', dbConnectionMiddleware, contactRoutes);
-app.use('/api/projects', dbConnectionMiddleware, projectRoutes);
-
-// Special warmup endpoint for Vercel cold starts
-app.get('/api/warmup', (req, res) => {
-  res.status(200).json({ status: 'ok', message: 'Server is ready' });
+// Simple health check
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', environment: process.env.NODE_ENV });
 });
 
-// Health check endpoint for monitoring and reliability
-app.get('/api/health', async (req, res) => {
-  try {
-    // Check database connection
-    const dbConnected = await connectToDB();
-    
-    // Check memory usage
-    const memoryUsage = process.memoryUsage();
-    const memoryUsageMB = {
-      rss: Math.round(memoryUsage.rss / 1024 / 1024 * 100) / 100,
-      heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024 * 100) / 100,
-      heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024 * 100) / 100,
-      external: Math.round(memoryUsage.external / 1024 / 1024 * 100) / 100,
-    };
-    
-    // Check uptime
-    const uptime = process.uptime();
-    
-    // Determine overall status
-    const status = dbConnected ? 'healthy' : 'degraded';
-    
-    res.status(dbConnected ? 200 : 503).json({
-      status,
-      timestamp: new Date().toISOString(),
-      uptime: `${Math.floor(uptime / 60)}m ${Math.floor(uptime % 60)}s`,
-      environment: process.env.NODE_ENV || 'development',
-      database: {
-        connected: dbConnected
-      },
-      memory: memoryUsageMB,
-      version: process.env.npm_package_version || '1.0.0'
-    });
-  } catch (error) {
-    console.error('Health check failed:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Health check failed',
-      error: process.env.NODE_ENV === 'production' ? undefined : error.message
-    });
-  }
-});
+
 
 // Static path
 const buildPath = path.join(__dirname, 'client', 'build');
@@ -174,11 +123,7 @@ app.use((err, req, res, next) => {
 });
 // Preload.js route handler moved above with proper MIME type and cache headers
 
-// This health check endpoint is now redundant since we have a more comprehensive one above
-// Keeping it for backward compatibility
-app.get('/api/health-legacy', (req, res) => {
-  res.status(200).json({ status: 'ok', environment: process.env.NODE_ENV, vercel: !!process.env.VERCEL });
-});
+
 
 // Client routing fallback with improved error handling
 app.get('*', (req, res) => {
