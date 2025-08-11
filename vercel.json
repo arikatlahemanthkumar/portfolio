@@ -1,55 +1,139 @@
 {
   "version": 2,
   "builds": [
-    { "src": "server.js", "use": "@vercel/node" },
+    { 
+      "src": "server.js", 
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "includeFiles": ["client/build/**"]
+      }
+    },
     { "src": "client/build/**", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/api/health", "dest": "/server.js", "methods": ["GET"] },
+    { "src": "/api/warmup", "dest": "/server.js", "methods": ["GET"] },
     { "src": "/api/(.*)", "dest": "/server.js" },
+    
     { "src": "/static/(.*)", "dest": "/client/build/static/$1" },
     { "src": "/favicon.ico", "dest": "/client/build/favicon.ico" },
     { "src": "/asset-manifest.json", "dest": "/client/build/asset-manifest.json" },
     { "src": "/manifest.json", "dest": "/client/build/manifest.json" },
-    { "src": "/serviceWorker.js", "dest": "/client/build/serviceWorker.js" },
+    {
+      "src": "/serviceWorker.js",
+      "dest": "/client/build/serviceWorker.js",
+      "headers": {
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+        "Content-Type": "application/javascript; charset=UTF-8"
+      }
+    },
     { "src": "/preload.js", "dest": "/client/build/preload.js" },
+    
     { "src": "/profile-image.jpg", "dest": "/client/build/profile-image.jpg" },
     { "src": "/og-image.jpg", "dest": "/client/build/og-image.jpg" },
     { "src": "/chatbot.jpg", "dest": "/client/build/chatbot.jpg" },
     { "src": "/ride-share.png", "dest": "/client/build/ride-share.png" },
+    { "src": "/default-image.svg", "dest": "/client/build/default-image.svg" },
+    { "src": "/default-icon.svg", "dest": "/client/build/default-icon.svg" },
+    
     { "src": "/fallback.html", "dest": "/client/build/fallback.html" },
+    { "src": "/serverless-error.html", "dest": "/client/build/serverless-error.html" },
     { "src": "/Arikatla_Hemanth_Kumar_Resume.pdf", "dest": "/client/build/Arikatla_Hemanth_Kumar_Resume.pdf" },
+    
     { "src": "/(.*)", "dest": "/client/build/index.html" }
   ],
   "headers": [
     {
-      "source": "/static/(.*)",
+      "source": "/static/css/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Type", "value": "text/css" }
+      ]
+    },
+    {
+      "source": "/static/js/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Type", "value": "application/javascript" }
+      ]
+    },
+    {
+      "source": "/static/media/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
+      "source": "/(.*).svg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Type", "value": "image/svg+xml" }
+      ]
+    },
+    {
       "source": "/serviceWorker.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store" },
-        { "key": "Content-Type", "value": "application/javascript" }
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Content-Type", "value": "application/javascript" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
       ]
     },
     {
       "source": "/preload.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store" },
-        { "key": "Content-Type", "value": "application/javascript" }
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Content-Type", "value": "application/javascript" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    },
+    {
+      "source": "/fallback.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    },
+    {
+      "source": "/serverless-error.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
   ],
   "env": {
     "NODE_ENV": "production",
     "VERCEL": "true"
+  },
+  "functions": {
+    "server.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
   }
 }

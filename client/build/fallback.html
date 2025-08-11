@@ -4,10 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <title>Arikatla Hemanth Kumar - Loading Portfolio</title>
+  <title>Arikatla Hemanth Kumar - Portfolio</title>
+  <meta name="description" content="Temporary loading page for Arikatla Hemanth Kumar's portfolio" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Prevent caching of this page -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
@@ -30,6 +35,7 @@
       border-radius: 8px;
       padding: 30px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
     }
     h1 {
       margin-top: 0;
@@ -51,11 +57,19 @@
       font-size: 16px;
       font-weight: 500;
       transition: all 0.2s ease;
+      margin: 5px;
     }
     button:hover {
       background-color: #3182ce;
       transform: translateY(-1px);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    button.secondary {
+      background-color: #e2e8f0;
+      color: #4a5568;
+    }
+    button.secondary:hover {
+      background-color: #cbd5e0;
     }
     .loader {
       border: 3px solid rgba(66, 153, 225, 0.2);
@@ -89,50 +103,206 @@
       width: 0%;
       transition: width 0.1s linear;
     }
+    .error-message {
+      background-color: #fff5f5;
+      color: #c53030;
+      border-left: 4px solid #fc8181;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-size: 14px;
+      text-align: left;
+      display: none;
+    }
+    .error-message.visible {
+      display: block;
+    }
+    .error-code {
+      font-family: monospace;
+      background-color: #f7fafc;
+      padding: 2px 4px;
+      border-radius: 2px;
+      font-size: 12px;
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Loading Portfolio...</h1>
-    <div class="loader"></div>
-    <div class="progress">
+    <h1 id="statusTitle">Loading Portfolio...</h1>
+    <div class="loader" id="loader"></div>
+    <div class="progress" id="progressContainer">
       <div class="progress-bar" id="progressBar"></div>
     </div>
-    <p>The portfolio is taking longer than expected to load. This might be due to a slow connection or a temporary server issue.</p>
-    <p>The page will automatically retry loading in <span id="countdown">5</span> seconds, or you can try refreshing manually.</p>
-    <button onclick="retryLoading()">Refresh Now</button>
+    
+    <!-- Error message container -->
+    <div class="error-message" id="errorMessage">
+      <strong>Error detected:</strong> <span id="errorType">Serverless Function Error</span><br>
+      <span id="errorDetails">The server encountered an unexpected condition that prevented it from fulfilling the request.</span>
+      <div id="errorCode" class="error-code"></div>
+    </div>
+    
+    <p id="loadingMessage">The portfolio is taking longer than expected to load. This might be due to a slow connection or a temporary server issue.</p>
+    <p id="countdownMessage">The page will automatically retry loading in <span id="countdown">5</span> seconds, or you can try refreshing manually.</p>
+    
+    <div class="button-group">
+      <button id="retryButton" onclick="retryLoading()">Refresh Now</button>
+      <button id="clearCacheButton" class="secondary" onclick="clearCacheAndReload()">Clear Cache & Reload</button>
+      <button id="homeButton" class="secondary hidden" onclick="goToHomepage()">Go to Homepage</button>
+    </div>
+    
     <div class="retry-count" id="retryCount"></div>
   </div>
 
   <script>
-    // Track retry attempts
+    // Configuration
     let retryAttempts = 0;
     const maxRetries = 3;
     let countdownValue = 5;
     let countdownInterval;
     let progressInterval;
     
+    // Get URL parameters to detect error type
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorType = urlParams.get('error');
+    const errorCode = urlParams.get('code');
+    
+    // Elements
+    const statusTitle = document.getElementById('statusTitle');
+    const errorMessage = document.getElementById('errorMessage');
+    const errorTypeEl = document.getElementById('errorType');
+    const errorDetailsEl = document.getElementById('errorDetails');
+    const errorCodeEl = document.getElementById('errorCode');
+    const retryCountEl = document.getElementById('retryCount');
+    const homeButton = document.getElementById('homeButton');
+    
+    // Check for error in URL or document body
+    function detectError() {
+      // Check URL parameters first
+      if (errorType) {
+        showError(errorType, errorCode);
+        return true;
+      }
+      
+      // Check for common error messages in the document
+      const bodyText = document.body.innerText;
+      if (bodyText.includes('Serverless Function crashed') || 
+          bodyText.includes('FUNCTION_INVOCATION_FAILED') || 
+          bodyText.includes('INTERNAL_SERVER_ERROR')) {
+        showError('serverless', 'FUNCTION_INVOCATION_FAILED');
+        return true;
+      }
+      
+      // Check for 500 errors
+      if (bodyText.includes('500') && 
+          (bodyText.includes('Internal Server Error') || bodyText.includes('Server Error'))) {
+        showError('server', '500');
+        return true;
+      }
+      
+      return false;
+    }
+    
+    // Show appropriate error message
+    function showError(type, code) {
+      // Update title
+      statusTitle.textContent = 'Something went wrong';
+      
+      // Show error message
+      errorMessage.classList.add('visible');
+      
+      // Set error details based on type
+      switch(type) {
+        case 'serverless':
+          errorTypeEl.textContent = 'Serverless Function Error';
+          errorDetailsEl.textContent = 'The server is temporarily unavailable. This is often due to a cold start issue with serverless functions.';
+          break;
+        case 'server':
+          errorTypeEl.textContent = 'Server Error';
+          errorDetailsEl.textContent = 'The server encountered an unexpected condition that prevented it from fulfilling the request.';
+          break;
+        case 'network':
+          errorTypeEl.textContent = 'Network Error';
+          errorDetailsEl.textContent = 'There was a problem connecting to the server. Please check your internet connection.';
+          break;
+        default:
+          errorTypeEl.textContent = 'Unknown Error';
+          errorDetailsEl.textContent = 'An unexpected error occurred while loading the portfolio.';
+      }
+      
+      // Show error code if available
+      if (code) {
+        errorCodeEl.textContent = `Error code: ${code}`;
+      }
+      
+      // Show home button after multiple retries
+      if (retryAttempts >= 2) {
+        homeButton.classList.remove('hidden');
+      }
+    }
+    
     // Update the retry count display
-    document.getElementById('retryCount').textContent = 
-      retryAttempts > 0 ? `Retry attempt ${retryAttempts} of ${maxRetries}` : '';
+    function updateRetryCount() {
+      retryCountEl.textContent = retryAttempts > 0 ? 
+        `Retry attempt ${retryAttempts} of ${maxRetries}` : '';
+    }
     
     // Function to retry loading the main page
     function retryLoading() {
       retryAttempts++;
+      updateRetryCount();
       
       // Clear any existing intervals
       clearInterval(countdownInterval);
       clearInterval(progressInterval);
       
-      // If we've reached max retries, try clearing cache and reloading
+      // If we've reached max retries, suggest clearing cache
       if (retryAttempts >= maxRetries) {
-        // Try to clear cache by adding a cache-busting parameter
-        window.location.href = '/?nocache=' + Date.now();
+        // Show clear cache button more prominently
+        document.getElementById('clearCacheButton').style.backgroundColor = '#4299e1';
+        document.getElementById('clearCacheButton').style.color = 'white';
+        document.getElementById('retryButton').style.backgroundColor = '#e2e8f0';
+        document.getElementById('retryButton').style.color = '#4a5568';
+        
+        // Update message
+        document.getElementById('loadingMessage').textContent = 
+          'Multiple refresh attempts failed. Try clearing your browser cache.';
+        document.getElementById('countdownMessage').style.display = 'none';
+        
+        // Show home button
+        homeButton.classList.remove('hidden');
         return;
       }
       
       // Otherwise just reload
-      window.location.href = '/';
+      window.location.href = '/?retry=' + retryAttempts;
+    }
+    
+    // Clear cache and reload
+    function clearCacheAndReload() {
+      // Try to clear service worker cache by sending message
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'INVALIDATE_CACHE'
+        });
+      }
+      
+      // Add cache busting parameter and reload
+      window.location.href = '/?clearcache=' + Date.now();
+    }
+    
+    // Go to homepage with cache busting
+    function goToHomepage() {
+      window.location.href = '/?home=' + Date.now();
     }
     
     // Start countdown
@@ -164,8 +334,22 @@
       }, 1000);
     }
     
-    // Start the countdown when page loads
-    startCountdown();
+    // Initialize
+    function init() {
+      // Check for errors
+      const hasError = detectError();
+      
+      // Update retry count display
+      updateRetryCount();
+      
+      // Start countdown if no error detected
+      if (!hasError) {
+        startCountdown();
+      }
+    }
+    
+    // Run initialization when page loads
+    window.addEventListener('load', init);
   </script>
 </body>
 </html>
