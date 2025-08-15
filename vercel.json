@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "name": "portfolio",
+  "alias": ["arikatlahemanthkumarportfolio.vercel.app"],
   "builds": [
     {
       "src": "server.js",
